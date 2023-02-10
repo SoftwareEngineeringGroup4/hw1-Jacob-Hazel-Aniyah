@@ -4,6 +4,6 @@ An implementation of the Hamilton Apportionment Algorithm
 
 Made by:
 
- * Jacob U
+ * Jacob Umbach
 
  * Aniyah Bohnen -> added Feb_09
