@@ -1,5 +1,9 @@
 # hw1-Jacob-Hazel-Aniyah
 
-Jacob U
+An implementation of the Hamilton Apportionment Algorithm
 
-Aniyah Bohnen -> added Feb_09
+Made by:
+
+ * Jacob U
+
+ * Aniyah Bohnen -> added Feb_09
