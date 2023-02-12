@@ -7,6 +7,7 @@
 
 using namespace std;
 
+bool compare(pair<string, pair<int, float>>& a, pair<string, pair<int, float>>& b);
 void sort_alphabetically(vector<pair<string, pair<int, float>>>& a);
 void max_float(vector<pair<string, pair<int, float>>>& a);
 void hamilton_apportionment_algorithm(ifstream& in, ofstream& out, int num_reps = 435);
@@ -28,7 +29,7 @@ int main()
 
 	try
 	{
-		hamilton_apportionment_algorithm(infile, outfile, 437);
+		hamilton_apportionment_algorithm(infile, outfile);
 	}
 	catch (runtime_error& error)
 	{
