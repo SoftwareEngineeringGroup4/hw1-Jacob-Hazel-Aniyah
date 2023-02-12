@@ -1,6 +1,9 @@
 # hw1-Jacob-Hazel-Aniyah
 
+
+--------------------------------------------------------
 An implementation of the Hamilton Apportionment Algorithm
+---------------------------------------------------------
 
 Made by:
 
