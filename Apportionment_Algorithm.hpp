@@ -10,9 +10,11 @@
 
 using namespace std;
 
-
 namespace Apportionment_Algorithm
 {
+
+	void Apportionment_Algorithm(ifstream&, ofstream&, int, string);
+
 	//compares strings
 	bool compare(pair<string, pair<int, float>>&, pair<string, pair<int, float>>&);
 
@@ -34,7 +36,10 @@ namespace Apportionment_Algorithm
 	calculated by Huntington-Hill's Apportionment Algorithm */
 	//void huntington_hill_algorithm(ifstream&, ofstream&, int);
 
-	void Apportionment_Algorithm(ifstream&, ofstream&, int, string);
+	int Entry_Message_1();
+
+	string Entry_Message_2();
+
 };
 
 

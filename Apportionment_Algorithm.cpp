@@ -1,6 +1,10 @@
 #include "Apportionment_Algorithm.hpp"
 
-void Apportionment_Algorithm::Apportionment_Algorithm(ifstream& in, ofstream& out, int num_reps = 435, string type = "Hamilton")
+const int default_reps = 435;
+string type_ham = "Hamilton";
+string type_hunt = "Huntington-Hill";
+
+void Apportionment_Algorithm::Apportionment_Algorithm(ifstream& in, ofstream& out, int num_reps, string type)
 {
 	if (type == "Huntington-Hill")
 	{
@@ -46,7 +50,7 @@ void Apportionment_Algorithm::max_float(vector<pair<string, pair<int, float>>>& 
 }
 
 
-void Apportionment_Algorithm::hamilton_algorithm(ifstream& in, ofstream& out, int num_reps = 435)
+void Apportionment_Algorithm::hamilton_algorithm(ifstream& in, ofstream& out, int num_reps)
 {
 	if (in and out)
 	{
@@ -111,6 +115,8 @@ void Apportionment_Algorithm::hamilton_algorithm(ifstream& in, ofstream& out, in
 			out << i.first << ',' << i.second.first << endl;
 		}
 
+		in.close();
+		out.close();
 	}
 	else
 	{
@@ -120,7 +126,74 @@ void Apportionment_Algorithm::hamilton_algorithm(ifstream& in, ofstream& out, in
 }
 
 
-//void huntington_hill_algorithm(ifstream& in, ofstream& out, int num_reps = 435)
-//{
+/*void Apportionment_Algorithm::huntington_hill_algorithm(ifstream& in, ofstream& out, int num_reps)
+{
+	if (in and out)
+	{
 
-//}
+		in.close();
+		out.close();
+	}
+	else
+	{
+		throw runtime_error("> Error: File does not exist\n");
+	}
+}
+*/
+
+int Apportionment_Algorithm::Entry_Message_1()
+{
+	string yaynay;
+	int num;
+
+	cout << "> Would you like to change the number of representatives? (currently set to 435) \n> Please type yes or no: ";
+	cin >> yaynay;
+
+	while (yaynay != "yes" && yaynay != "no")
+	{
+		cout << "> Incorrect Syntax \n> Please type yes or no: ";
+		cin >> yaynay;
+	}
+	if (yaynay == "no")
+	{
+		num = default_reps;
+	}
+	else
+	{
+
+		cout << "> Please enter the number of representatives you wish to use: ";
+		cin >> num;
+		while (num <= 0)
+		{
+			cout << "> Error: negative number entered\n> Re-enter number of representatives (positive number): ";
+			cin >> num;
+		}
+	}
+
+	cout << endl;
+	return num;
+}
+
+string Apportionment_Algorithm::Entry_Message_2()
+{
+	string yaynay;
+	string types;
+
+	cout << "> Would you like to change the algorithm used to the Hamilton method? (currently set to the Huntington-Hill method)\n> Please type yes or no: ";
+	cin >> yaynay;
+	while (yaynay != "yes" && yaynay != "no")
+	{
+		cout << "> Incorrect Syntax \n> Please type yes or no: ";
+		cin >> yaynay;
+	}
+	if (yaynay == "yes")
+	{
+		types = type_ham;
+	}
+	else
+	{
+		types = type_hunt;
+	}
+	cout << endl;
+	return types;
+}
