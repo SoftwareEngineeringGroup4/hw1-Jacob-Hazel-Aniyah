@@ -16,7 +16,7 @@ int main()
 		cout << "> Error opening new file\n";
 
 
-	int number_of_representatives;
+	int number_of_representatives = 435;
 	string type_of_algorithm;
 
 	int default_reps = 435;
@@ -25,7 +25,7 @@ int main()
 
 	try
 	{
-		Apportionment_Algorithm Reps(infile, outfile, 437, " ");
+		Apportionment_Algorithm::Apportionment_Algorithm(infile, outfile, 437, type_ham);
 	}
 	catch (runtime_error& error)
 	{

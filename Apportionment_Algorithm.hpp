@@ -1,5 +1,5 @@
-#ifndef APPORTIONMENT_ALGORITHM
-#define APPORTIONMENT_ALGORITHM
+#ifndef APPORTIONMENT_ALGORITHM_H
+#define APPORTIONMENT_ALGORITHM_H
 
 
 #include <iostream>
@@ -10,9 +10,9 @@
 
 using namespace std;
 
-class Apportionment_Algorithm
+
+namespace Apportionment_Algorithm
 {
-private:
 	//compares strings
 	bool compare(pair<string, pair<int, float>>&, pair<string, pair<int, float>>&);
 
@@ -32,10 +32,9 @@ private:
 	and creates a new CVS file that has the state names in
 	alphabetical order with a number of representatives
 	calculated by Huntington-Hill's Apportionment Algorithm */
-	void huntington_hill_algorithm(ifstream&, ofstream&, int);
+	//void huntington_hill_algorithm(ifstream&, ofstream&, int);
 
-public:
-	Apportionment_Algorithm(ifstream&, ofstream&, int, string);
+	void Apportionment_Algorithm(ifstream&, ofstream&, int, string);
 };
 
 

@@ -1,10 +1,10 @@
 #include "Apportionment_Algorithm.hpp"
 
-Apportionment_Algorithm::Apportionment_Algorithm(ifstream& in, ofstream& out, int num_reps = 435, string type)
+void Apportionment_Algorithm::Apportionment_Algorithm(ifstream& in, ofstream& out, int num_reps = 435, string type = "Hamilton")
 {
 	if (type == "Huntington-Hill")
 	{
-		huntington_hill_algorithm(in, out, num_reps);
+		//huntington_hill_algorithm(in, out, num_reps);
 	}
 	else if (type == "Hamilton")
 	{
@@ -120,7 +120,7 @@ void Apportionment_Algorithm::hamilton_algorithm(ifstream& in, ofstream& out, in
 }
 
 
-void huntington_hill_algorithm(ifstream& in, ofstream& out, int num_reps = 435)
-{
+//void huntington_hill_algorithm(ifstream& in, ofstream& out, int num_reps = 435)
+//{
 
-}
+//}
