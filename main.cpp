@@ -16,7 +16,7 @@ int main()
 	}
 
 	//creates a new csv file that will be written on
-	string new_file_name = file_name + " + reps.csv";
+	string new_file_name = file_name + " reps.csv";
 	ofstream outfile(new_file_name);
 	if (!outfile)
 	{
@@ -40,7 +40,7 @@ int main()
 	}
 	catch (runtime_error& error)
 	{
-		cout << error.what();
+		cout << error.what() << endl << endl;
 	}
 	infile.close();
 	outfile.close();
