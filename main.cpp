@@ -1,7 +1,6 @@
 #include "Apportionment_Algorithm.hpp"
 
 
-
 int main()
 {
 	//opens the csv file to start reading
@@ -12,7 +11,16 @@ int main()
 	ifstream infile(file_name + ".csv");
 	if (!infile)
 	{
-		cout << "> Error opening file...\n> Exiting Program...\n";
+		cout << "> Error opening file...\n";
+
+		ifstream check(file_name + ".xlsx");
+		if (check)
+		{
+			cout << "\n> Your file is an .xlsx file\n> Please change it to a .csv file\n";
+			cout << "	- Go into the Excel file\n	- Click File -> Save As\n	- Change the file type to CSV\n	- Save then re-run this program\n\n";
+		}
+
+		cout << "> Exiting Program...\n";
 		exit(1);
 	}
 
@@ -25,6 +33,7 @@ int main()
 		exit(1);
 	}
 
+
 	int number_of_representatives = Apportionment_Algorithm::Entry_Message_1();
 
 	string type_of_algorithm = Apportionment_Algorithm::Entry_Message_2();
@@ -32,7 +41,6 @@ int main()
 	cout << "> Number of representatives used in algorithm will be : " << number_of_representatives << endl;
 	cout << "> Type of algorithm used will be the \'" << type_of_algorithm << "\' method" << endl;
 	cout << endl << "> Calculating.....\n\n\n";
-
 
 	try
 	{
