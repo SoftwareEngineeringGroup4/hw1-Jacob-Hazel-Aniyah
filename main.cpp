@@ -1,6 +1,7 @@
 #include "Apportionment_Algorithm.hpp"
 
 
+
 int main()
 {
 	//opens the csv file to start reading
@@ -28,21 +29,28 @@ int main()
 
 	string type_of_algorithm = Apportionment_Algorithm::Entry_Message_2();
 
-
 	cout << "> Number of representatives used in algorithm will be : " << number_of_representatives << endl;
 	cout << "> Type of algorithm used will be the \'" << type_of_algorithm << "\' method" << endl;
 	cout << endl << "> Calculating.....\n\n\n";
 
+
 	try
 	{
-		Apportionment_Algorithm::Apportionment_Algorithm(infile, outfile, number_of_representatives, type_of_algorithm);
+
+		vector<pair<string, int>> input_file;
+		Apportionment_Algorithm::make_vector(infile, input_file);
+
+
+		Apportionment_Algorithm::Apportionment_Algorithm(input_file, outfile, number_of_representatives, type_of_algorithm);
 		cout << endl << "> Finished :)\n\n\n";
 	}
 	catch (runtime_error& error)
 	{
 		cout << error.what() << endl << endl;
 	}
+
 	infile.close();
 	outfile.close();
+
 	return 0;
 }

@@ -4,7 +4,7 @@ const int default_reps = 435;
 string type_ham = "Hamilton";
 string type_hunt = "Huntington-Hill";
 
-void Apportionment_Algorithm::Apportionment_Algorithm(ifstream& in, ofstream& out, int num_reps, string type)
+void Apportionment_Algorithm::Apportionment_Algorithm(vector<pair<string, int>>& in, ofstream& out, int num_reps, string type)
 {
 	if (type == "Huntington-Hill")
 	{
@@ -20,6 +20,44 @@ void Apportionment_Algorithm::Apportionment_Algorithm(ifstream& in, ofstream& ou
 	}
 }
 
+
+
+bool Apportionment_Algorithm::is_number(const string& s)
+{
+	string::const_iterator it = s.begin();
+	while (it != s.end() && isdigit(*it)) ++it;
+	return !s.empty() && it == s.end();
+}
+
+void Apportionment_Algorithm::make_vector(ifstream& in, vector<pair<string, int>>& file)
+{
+	string line;
+	string name;
+	string pop_s;
+
+	getline(in, line); // skip the first line
+
+	while (getline(in, line)) // read whole line into line
+	{
+		istringstream iss(line); // string stream
+		getline(iss, name, ','); // read first part up to comma, ignore the comma
+		getline(iss, pop_s, ','); // read the second part, ignore the comma
+
+		//checks to see if the population is valid and skips if it is not
+		if (!Apportionment_Algorithm::is_number(pop_s))
+		{
+			cout << "> Warning: " << name << " was skipped due to bad formatting" << endl;
+			continue;
+		}
+
+		int pop_i = stoi(pop_s);
+		file.push_back(make_pair(name, pop_i));
+	}
+	if (file.size() == 0)
+	{
+		throw runtime_error("> Error: File has no valid information");
+	}
+}
 
 bool Apportionment_Algorithm::compare_1(pair<string, pair<int, float>>& a, pair<string, pair<int, float>>& b)
 {
@@ -60,28 +98,16 @@ void Apportionment_Algorithm::max_float(vector<pair<string, pair<int, float>>>& 
 }
 
 
-void Apportionment_Algorithm::hamilton_algorithm(ifstream& in, ofstream& out, int num_reps)
+void Apportionment_Algorithm::hamilton_algorithm(vector<pair<string, int>>& in, ofstream& out, int num_reps)
 {
-	if (in and out)
+	if (out)
 	{
-		string state_header, pop_header;
-		getline(in, state_header, ',');
-		getline(in, pop_header, '\n');
-
 		//calculates total population
-		string state_name;
-		int pop;
 		int total_pop = 0;
-		while (getline(in, state_name, ',') && in >> pop)
+		for(auto it: in)
 		{
-			total_pop += pop;
+			total_pop += it.second;
 		}
-
-		//resets the read file back to the second line
-		in.clear();
-		in.seekg(0);
-		getline(in, state_header, ',');
-		getline(in, pop_header, '\n');
 
 		//calculates average population per representative
 		float avg_pop_per_rep = static_cast<float>(total_pop) / num_reps;
@@ -91,18 +117,15 @@ void Apportionment_Algorithm::hamilton_algorithm(ifstream& in, ofstream& out, in
 		float divide;
 		int floor;
 		float remain;
-		string popp;
-		int pops;
 		int reps_used = 0;
 		vector<pair<string, pair<int, float>>> state_floor_remain;
-		while (getline(in, state_name, ',') && getline(in, popp, '\n'))
+		for (auto it : in)
 		{
-			pops = stoi(popp);
-			divide = static_cast<float>(pops) / avg_pop_per_rep;
+			divide = static_cast<float>(it.second) / avg_pop_per_rep;
 			floor = static_cast<int>(divide);
 			remain = divide - floor;
 
-			state_floor_remain.push_back(make_pair(state_name, make_pair(floor, remain)));
+			state_floor_remain.push_back(make_pair(it.first, make_pair(floor, remain)));
 
 			reps_used += floor;
 		}
@@ -119,13 +142,12 @@ void Apportionment_Algorithm::hamilton_algorithm(ifstream& in, ofstream& out, in
 		sort_alphabetically_1(state_floor_remain);
 
 		//prints the statename and reps into the output file
-		out << state_header << ", # of Reps" << endl;
+		out <<  "State, # of Reps" << endl;
 		for (auto i : state_floor_remain)
 		{
 			out << i.first << ',' << i.second.first << endl;
 		}
 
-		in.close();
 		out.close();
 	}
 	else
@@ -159,23 +181,16 @@ void Apportionment_Algorithm::max_prio(vector<pair<int, pair<int, double>>>& a)
 }
 
 
-void Apportionment_Algorithm::huntington_hill_algorithm(ifstream& in, ofstream& out, int num_reps)
+void Apportionment_Algorithm::huntington_hill_algorithm(vector<pair<string, int>>& in, ofstream& out, int num_reps)
 {
-	if (in and out)
+	if (out)
 	{
-		string state_header, pop_header;
-		getline(in, state_header, ',');
-		getline(in, pop_header, '\n');
-
-
 		// creates a vector that holds population, initial reps (1), and initial priority score
-		string state_name;
-		int pop;
 		vector<pair<int, pair<int, double>>> pop_rep_prio;
-		while (getline(in, state_name, ',') && in >> pop)
+		for (auto it : in)
 		{
-			double prio_score = priority(pop,1);
-			pop_rep_prio.push_back( make_pair(pop, make_pair(1, prio_score)));
+			double prio_score = priority(it.second, 1);
+			pop_rep_prio.push_back(make_pair(it.second, make_pair(1, prio_score)));
 			num_reps--;
 		}
 		//checks to see if the number of states is less than number of reps and exits if that is the case
@@ -191,19 +206,12 @@ void Apportionment_Algorithm::huntington_hill_algorithm(ifstream& in, ofstream& 
 			num_reps--;
 		}
 
-		//resets the read file back to the second line
-		in.clear();
-		in.seekg(0);
-		getline(in, state_header, ',');
-		getline(in, pop_header, '\n');
-
 		// creates a vector that has the states and their final representative number
 		vector<pair<string, int>> result;
 		int i = 0;
-		string popp;
-		while (getline(in, state_name, ',') && getline(in, popp, '\n'))
+		for (auto it : in)
 		{
-			result.push_back(make_pair(state_name, pop_rep_prio[i].second.first));
+			result.push_back(make_pair(it.first, pop_rep_prio[i].second.first));
 			i++;
 		}
 
@@ -211,13 +219,11 @@ void Apportionment_Algorithm::huntington_hill_algorithm(ifstream& in, ofstream& 
 		sort_alphabetically_2(result);
 
 		//prints the statename and reps into the output file
-		out << state_header << ", # of Reps" << endl;
+		out << "State, # of Reps" << endl;
 		for (auto i : result)
 		{
 			out << i.first << ',' << i.second << endl;
 		}
-
-		in.close();
 		out.close();
 	}
 	else

@@ -8,13 +8,21 @@
 #include <vector>
 #include <algorithm>
 #include <cmath>
+#include <sstream>
 
 using namespace std;
 
 namespace Apportionment_Algorithm
 {
 
-	void Apportionment_Algorithm(ifstream&, ofstream&, int, string);
+	void Apportionment_Algorithm(vector<pair<string, int>>&, ofstream&, int, string);
+
+
+	// reads a string and checks to see if it is an integer
+	bool is_number(const string&);
+
+	// changes the csv file into a vector
+	void make_vector(ifstream& , vector<pair<string, int>>&);
 
 	//compares strings 
 	bool compare_1(pair<string, pair<int, float>>&, pair<string, pair<int, float>>&);
@@ -31,7 +39,7 @@ namespace Apportionment_Algorithm
 	and creates a new CVS file that has the state names in
 	alphabetical order with a number of representatives
 	calculated by Hamilton's Apportionment Algorithm */
-	void hamilton_algorithm(ifstream&, ofstream&, int);
+	void hamilton_algorithm(vector<pair<string, int>>&, ofstream&, int);
 
 
 	// formula for calculating priority score of a state given pop. and reps it already has
@@ -44,7 +52,7 @@ namespace Apportionment_Algorithm
 	and creates a new CVS file that has the state names in
 	alphabetical order with a number of representatives
 	calculated by Huntington-Hill's Apportionment Algorithm */
-	void huntington_hill_algorithm(ifstream&, ofstream&, int);
+	void huntington_hill_algorithm(vector<pair<string, int>>&, ofstream&, int);
 
 	int Entry_Message_1();
 
