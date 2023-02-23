@@ -3,23 +3,41 @@
 
 int main()
 {
-	//opens the csv file to start reading
-	string file_name;
+	
+	string file_name, file_type;
 	cout << "> Please type in the name of the csv file you wish to use exactly: ";
 	cin >> file_name;
+	cout << "> Please specify the file type (csv or xlsx): ";
+	cin >> file_type;
 	cout << endl;
+
+	while (file_type != "csv" && file_type != "xlsx")
+	{
+		cout << "> Incorrect Syntax \n> Please type csv or xlsx: ";
+		cin >> file_type;
+	}
+
+	string hold = file_name;
+
+	// creates a copy of the xlsx file as a csv file to work with
+	if (file_type == "xlsx")
+	{
+		string str = file_name + ".xlsx";
+		const char* name = str.c_str();
+
+		intrusive_ptr<Aspose::Cells::IWorkbook> wkb = Factory::CreateIWorkbook(new String(name));
+		wkb->Save(new String("temp.csv"));
+
+		file_name = "temp";
+
+	}
+
+	//opens the csv file to start reading
 	ifstream infile(file_name + ".csv");
 	if (!infile)
 	{
 		cout << "> Error opening file...\n";
-
 		ifstream check(file_name + ".xlsx");
-		if (check)
-		{
-			cout << "\n> Your file is an .xlsx file\n> Please change it to a .csv file\n";
-			cout << "	- Go into the Excel file\n	- Click File -> Save As\n	- Change the file type to CSV\n	- Save then re-run this program\n\n";
-		}
-
 		cout << "> Exiting Program...\n";
 		exit(1);
 	}
@@ -44,12 +62,27 @@ int main()
 
 	try
 	{
-
+		//turns the file into a vector
 		vector<pair<string, int>> input_file;
 		Apportionment_Algorithm::make_vector(infile, input_file);
 
-
 		Apportionment_Algorithm::Apportionment_Algorithm(input_file, outfile, number_of_representatives, type_of_algorithm);
+
+
+
+		// changes file back to xlsx if it originally was an xlsx file
+		if (file_name == "temp")
+		{
+
+			string t = hold + " reps.xlsx";
+			const char* n = t.c_str();
+
+			intrusive_ptr<Aspose::Cells::IWorkbook> wkb2 = Factory::CreateIWorkbook(new String("temp reps.csv"));
+			wkb2->Save(new String(n));
+
+		}
+
+
 		cout << endl << "> Finished :)\n\n\n";
 	}
 	catch (runtime_error& error)
@@ -59,6 +92,10 @@ int main()
 
 	infile.close();
 	outfile.close();
+
+	remove("temp.csv");
+	remove("temp reps.csv");
+	
 
 	return 0;
 }

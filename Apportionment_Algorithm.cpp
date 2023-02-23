@@ -21,7 +21,6 @@ void Apportionment_Algorithm::Apportionment_Algorithm(vector<pair<string, int>>&
 }
 
 
-
 bool Apportionment_Algorithm::is_number(const string& s)
 {
 	string::const_iterator it = s.begin();
