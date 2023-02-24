@@ -1,8 +1,8 @@
 # hw1-Jacob-Hazel-Aniyah
 
---------------------------------------------------------
+-----------------------------------------------------------------------------
 An implementation of the Hamilton's and Huntington's Apportionment Algorithms
----------------------------------------------------------
+-----------------------------------------------------------------------------
 
 Made by:
 
@@ -16,5 +16,5 @@ Made by:
  Final Submission of Hamilton's Algorithm 
  -> Submitted Feb.11, 2023 at 10:40 pm
 
-  Final Submission of Huntington's Algorithm 
+ Final Submission of Huntington's Algorithm
  -> Submitted Feb.23, 2023 at 8:35 pm
