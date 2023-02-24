@@ -1,5 +1,6 @@
 #include "Apportionment_Algorithm.hpp"
 
+
 const int default_reps = 435;
 string type_ham = "Hamilton";
 string type_hunt = "Huntington-Hill";
