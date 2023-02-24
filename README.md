@@ -12,11 +12,9 @@ Made by:
  
  * Hazel Phyu
 
-
- Final Submission of Hamilton's Algorithm 
+ 
+Final Submission of Hamilton's Algorithm 
  -> Submitted Feb.11, 2023 at 10:40 pm
 
- 
-
-
- 
+Final Submission of Huntington's Algorithm 
+ -> Submitted Feb.23, 2023 at 8:40 pm
