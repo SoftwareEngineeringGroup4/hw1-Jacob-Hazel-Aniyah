@@ -1,0 +1,10 @@
+Instruction on install and use Aspose:
+
+
+Package Manager Controls ( Bottom Left )
+PM> Install-Package Aspose.Cells.Cpp
+
+Properties ( Alt + Enter )
+Configurations : all configs
+General Properties
+Platform Toolset: v142
